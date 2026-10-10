@@ -1,161 +1,144 @@
 # Mini Office Management System
 
-A simple full-stack office management application built with technologies that are easy to explain in an interview.
+A full-stack MERN application designed to simplify office operations through employee management, leave requests, role-based access control, and dashboard analytics.
 
-## Main Features
+## 📌 Project Overview
 
-### 1. Employee Management
+The Mini Office Management System provides a centralized platform for managing employee information and leave workflows. It is built using the MERN stack and follows a modular frontend/backend architecture.
 
-- Add employee
-- View employee list
-- Search employees
-- Filter by department and status
-- Edit employee
-- Delete employee
-- Employee login account is created when an employee is created
+This repository also contains a separate QA documentation section for reporting and documenting issues identified during testing of the Glazzarto websites.
 
-### 2. Leave Management
+## ✨ Key Features
 
-- Employees submit leave requests
-- Leave starts as `Pending`
-- Admin can `Approve` or `Reject` a request
-- Employees can see their own requests
-- Admin can see all requests
-- Overlapping leave requests are rejected
+### Employee Management
 
-### 3. Analytics Dashboard
+- Create, view, update, and delete employee records.
+- Search and filter employee information.
+- Support organized employee data management.
 
-- Total employees
-- Active employees
-- Employees on leave
-- Inactive employees
-- Pending, approved and rejected leaves
-- Employees grouped by department
+### Leave Management
 
-## Technology
+- Submit employee leave requests.
+- Track pending leave requests.
+- Approve or reject leave requests according to user permissions.
 
-### Frontend
+### Authentication and Authorization
 
-- React
-- React Router
-- Axios
-- CSS
-- Vite
+- JWT-based authentication.
+- Password hashing using bcrypt.
+- Role-based access control (RBAC).
+- Protected routes for authorized operations.
 
-### Backend
+### Dashboard and User Experience
 
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- JWT authentication
-- bcryptjs for password hashing
+- Dashboard analytics for office management.
+- Form validation and error handling.
+- Responsive user interface.
+- Structured API communication between frontend and backend.
 
-## Why I chose this stack
+### Security and Reliability
 
-I chose the MERN-style stack because I am comfortable with JavaScript, React, Express and MongoDB. React handles the UI, Express handles the REST API, and MongoDB stores employees, users and leave requests.
+- Environment variables for sensitive configuration.
+- API request validation.
+- Security middleware and rate limiting.
+- Consistent handling of API errors.
 
-I intentionally kept the implementation simple. There are no advanced state-management libraries or complicated validation frameworks. Most validation is written with normal JavaScript so the code is easy to understand and explain.
+## 🛠️ Technology Stack
 
-## Folder Structure
+| Layer           | Technologies                         |
+| --------------- | ------------------------------------ |
+| Frontend        | React, Vite, JavaScript, CSS         |
+| Backend         | Node.js, Express.js                  |
+| Database        | MongoDB, Mongoose                    |
+| Authentication  | JSON Web Tokens (JWT), bcrypt        |
+| Security        | Helmet, CORS, request rate limiting  |
+| Testing         | Jest and Supertest, where configured |
+| Version Control | Git and GitHub                       |
+
+## 📁 Project Structure
 
 ```text
 mini-office-management/
-│
 ├── backend/
 │   ├── config/
-│   │   └── db.js
 │   ├── controllers/
-│   │   ├── authController.js
-│   │   ├── dashboardController.js
-│   │   ├── employeeController.js
-│   │   └── leaveController.js
 │   ├── middleware/
-│   │   ├── authenticateUser.js
-│   │   └── authorizeRole.js
 │   ├── models/
-│   │   ├── User.js
-│   │   ├── Employee.js
-│   │   └── Leave.js
 │   ├── routes/
-│   │   ├── authRoutes.js
-│   │   ├── employeeRoutes.js
-│   │   └── leaveRoutes.js
-│   ├── scripts/
-│   │   └── createAdmin.js
-│   ├── .env.example
-│   ├── package.json
-│   └── server.js
+│   ├── tests/
+│   ├── .env
+│   └── package.json
 │
-└── frontend/
-    ├── src/
-    │   ├── components/
-    │   ├── context/
-    │   ├── pages/
-    │   ├── services/
-    │   ├── App.jsx
-    │   └── main.jsx
-    ├── .env.example
-    └── package.json
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+├── QA/
+│   ├── BUG_REPORT_SUMMARY.md
+│   ├── TEST_CASES.md
+│   ├── detailed-bug-logs/
+│   │   └── BUG_TEMPLATE.md
+│   └── evidence/
+│       └── Screenshots of reported issues
+│
+├── .gitignore
+├── .prettierrc.json
+└── README.md
 ```
 
-## How Authentication Works
+_Note: The folder structure above describes the expected organization. Some subfolders may differ depending on the files present in your project._
 
-1. User sends email and password to `/api/auth/login`.
-2. Server finds the user in MongoDB.
-3. bcrypt compares the entered password with the stored hash.
-4. Server creates a JWT containing the user ID and role.
-5. React stores the token in `localStorage`.
-6. Axios sends the token in the `Authorization: Bearer TOKEN` header.
-7. `authenticateUser` verifies the token before protected routes are executed.
-8. `authorizeRole('admin')` is used for admin-only operations.
+## ⚙️ Prerequisites
 
-## HTTP Status Codes Used
+Install the following before running the application:
 
-- `200` - Request successful
-- `201` - New record created
-- `400` - Invalid input
-- `401` - User is not authenticated
-- `403` - User is authenticated but does not have permission
-- `404` - Record was not found
-- `409` - Duplicate/conflicting data
-- `500` - Server error
+- Node.js and npm
+- MongoDB, either locally or through MongoDB Atlas
+- Git
+- A modern web browser
 
-## Environment Variables
+## 🚀 Installation and Setup
 
-Never put real secrets in GitHub.
+### 1. Clone the repository
 
-Create `backend/.env` from `.env.example`:
+```bash
+git clone https://github.com/samyak9403-cell/officehub.git
+cd officehub
+```
+
+### 2. Configure the backend
+
+Open a terminal and run:
+
+```bash
+cd backend
+npm install
+```
+
+Create a `.env` file in the `backend` directory with the following configuration:
 
 ```env
 PORT=5000
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_long_random_secret
-ADMIN_NAME=Office Admin
-ADMIN_EMAIL=admin@example.com
-ADMIN_PASSWORD=Admin@123
 ```
 
-Create `frontend/.env` from `.env.example`:
+Replace the placeholder values with your own MongoDB connection string and a strong, private JWT secret.
 
-```env
-VITE_API_URL=http://localhost:5000/api
-```
+**Security note:** Never commit real credentials, database passwords, or JWT secrets to GitHub. Keep `.env` excluded through `.gitignore`.
 
-## Run the project
-
-### Backend
+Start the backend:
 
 ```bash
-cd backend
-npm install
-npm run create-admin
-npm run dev
+npm start
 ```
 
-### Frontend
+If the backend package does not define a `start` script, check `backend/package.json` for the correct command.
 
-Open another terminal:
+### 3. Configure the frontend
+
+Open a second terminal from the project root:
 
 ```bash
 cd frontend
@@ -163,4 +146,92 @@ npm install
 npm run dev
 ```
 
-Open the URL shown by Vite, normally `http://localhost:5173`.
+Open the local URL printed by Vite in the terminal.
+
+If the frontend uses an API base URL environment variable, configure it to point to your running backend. For a local backend, the API base URL may be `http://localhost:5000/api`, depending on the routes configured in the project.
+
+### 4. Verify the application
+
+- Confirm that the backend starts without errors.
+- Confirm that the frontend loads successfully.
+- Verify the MongoDB connection.
+- Test login and protected routes.
+- Test employee management and leave workflows.
+- Check the browser console and backend logs for errors.
+
+## 🧪 Testing
+
+Run tests from the backend directory:
+
+```bash
+cd backend
+npm test
+```
+
+This command assumes a `test` script is configured in `backend/package.json`. Review the available scripts if npm reports that the command is missing.
+
+Recommended test coverage includes:
+
+- Authentication and authorization.
+- Required-field validation.
+- Employee CRUD operations.
+- Leave request submission and status changes.
+- Invalid requests and unauthorized access.
+- Database and API error handling.
+
+## 🔐 Environment Variables
+
+| Variable      | Purpose                             |
+| ------------- | ----------------------------------- |
+| `PORT`        | Port used by the backend server     |
+| `MONGODB_URI` | MongoDB connection string           |
+| `JWT_SECRET`  | Secret used to sign and verify JWTs |
+
+Keep production secrets in a secure environment configuration system rather than committing them to source control.
+
+## 🐞 QA Documentation — Glazzarto
+
+The `QA/` directory contains documentation for the separate Glazzarto website testing activity.
+
+### Included QA Deliverables
+
+- **`BUG_REPORT_SUMMARY.md`** — Summary of reported issues, their severity, and supporting evidence.
+- **`TEST_CASES.md`** — Test scenarios and expected results.
+- **`detailed-bug-logs/BUG_TEMPLATE.md`** — Template for recording individual defects.
+- **`evidence/`** — Screenshots supporting reported issues.
+
+### Reported Issues
+
+1. Inconsistent logo sizing across the websites.
+2. Missing language selector in the header.
+3. Missing search suggestions while typing.
+4. HTTP 429 errors when changing the price filter.
+5. Design or color filters not appearing to apply correctly.
+6. Homepage banner text not changing with the selected language.
+7. Password-change or reset email not received during testing.
+
+These are reported observations and have not necessarily been confirmed as root-cause defects. Further investigation and retesting are required.
+
+## 🔒 Error Handling and Validation
+
+The application is intended to validate incoming data, protect restricted operations, and handle API failures consistently. Authentication, authorization, database errors, and invalid input should be tested before deployment.
+
+## 📱 Responsive Design
+
+The frontend is intended to support common desktop and mobile screen sizes. Verify layouts, forms, navigation, and dashboard components across target devices before release.
+
+## 🔮 Future Improvements
+
+- Add automated integration and end-to-end tests.
+- Improve audit logging and operational monitoring.
+- Add pagination and advanced employee filtering where needed.
+- Improve accessibility and user feedback.
+- Add deployment automation and production monitoring.
+
+## 👨‍💻 Author
+
+**Samyak Jain**
+
+GitHub: [samyak9403-cell](https://github.com/samyak9403-cell)
+
+##
