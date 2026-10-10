@@ -41,7 +41,8 @@ function Register() {
         navigate('/login');
       }, 1000);
     } catch (error) {
-      setMessage('Could not connect to server');
+      console.error('Registration error:', error);
+      setMessage(error.message || 'Registration failed. Please try again.');
     }
   }
 
