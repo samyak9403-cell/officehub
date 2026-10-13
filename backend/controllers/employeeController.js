@@ -29,12 +29,7 @@ exports.getEmployees = async (req, res) => {
 
     if (search) {
       const regex = new RegExp(search, 'i');
-      query.$or = [
-        { name: regex },
-        { employeeId: regex },
-        { email: regex },
-        { designation: regex }
-      ];
+      query.$or = [{ name: regex }, { employeeId: regex }, { email: regex }, { designation: regex }];
     }
 
     if (department) query.department = department;
@@ -107,7 +102,11 @@ exports.createEmployee = async (req, res) => {
 
     res.status(201).json({ message: 'Employee created successfully', employee });
   } catch (error) {
-    res.status(500).json({ message: 'Could not create employee' });
+    console.error('Create employee error:', error);
+    res.status(500).json({
+      message: 'Could not create employee',
+      error: error.message
+    });
   }
 };
 
